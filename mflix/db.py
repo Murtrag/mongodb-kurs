@@ -544,3 +544,15 @@ def get_configuration():
     role_info = db.command({'connectionStatus': 1}).get('authInfo').get(
         'authenticatedUserRoles')[0]
     return (db.client.max_pool_size, db.client.write_concern, role_info)
+
+
+
+def get_movies_by_country(countrys_cs):
+    country_list = countrys_cs.split(',')
+    client = MongoClient("mongodb+srv://m220student:m220password@mflix-suvy2.mongodb.net/test") 
+    #print(client.database_names())
+    db = client.mflix
+    col = db.movies
+    return col.find({"countries":country_list}, {"_id" : 0, "title" : 1})
+
+#get_movies_by_country("Poland,USA")
